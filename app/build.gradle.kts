@@ -80,6 +80,7 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("androidx.compose.runtime:runtime-rxjava3:1.5.4")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

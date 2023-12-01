@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dev.vengateshm.modern_android_architectures.model.CountryService
 import dev.vengateshm.modern_android_architectures.mvc.CountryState
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -39,6 +40,22 @@ class CountriesViewModel : ViewModel() {
                         _data.value = CountryState(error = it.toString(), isLoading = false)
                     })
         )
+    }
+
+    fun getAllCountriesSingle(): Single<CountryState> {
+        return countryService.getCountries()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                CountryState(
+                    countries = it,
+                    error = null,
+                    isLoading = false
+                )
+            }
+            .onErrorReturn {
+                CountryState(error = it.toString(), isLoading = false)
+            }
     }
 
     override fun onCleared() {
